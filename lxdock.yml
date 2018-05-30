@@ -1,0 +1,14 @@
+name: ofvm
+image: ubuntu/xenial
+
+users:
+  - name: dev
+    shell: /bin/bash
+    sudoer: yes
+
+shell:
+  user: dev
+
+shares:
+  - source: .
+    dest: /home/dev/.ofvm

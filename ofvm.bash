@@ -189,6 +189,13 @@ ofvm_default() {
 ofvm_list() {
   versions=$(ls -1 $OF_SRC | grep OpenFOAM-)
   echo $versions
+
+  if [ -f $OF_DEFAULT_VERSION_PATH ]; then
+    echo
+    echo "Default: $(cat $OF_DEFAULT_VERSION_PATH)"
+  else
+    echo "No default is set. Use the command ofvm default VERSION to set."
+  fi
 }
 
 ofvm_listavailable() {

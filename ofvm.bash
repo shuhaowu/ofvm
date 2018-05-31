@@ -35,6 +35,10 @@ __ofvm_error_not_installed() {
   echo "ERROR: $of_name is not installed to $src_path" >&2
 }
 
+__ofvm_log() {
+  echo "[ofvm] $1"
+}
+
 # Command line
 
 ofvm() {
@@ -105,7 +109,11 @@ ofvm_install() (
     popd >/dev/null
   popd >/dev/null
 
-  echo "Successfully installed ${of_name} from ${of_git_url}."
+  __ofvm_log "Successfully installed ${of_name} from ${of_git_url}."
+
+  if [ ! -f $OF_DEFAULT_VERSION_PATH ]; then
+    ofvm_default $of_name
+  fi
 )
 
 ofvm_update() (
@@ -156,14 +164,14 @@ ofvm_use() {
   fi
 
   . $src_path/etc/bashrc
-  echo "[ofvm] switched to using $of_name"
+  __ofvm_log "switched to using $of_name"
 }
 
 ofvm_default() {
   of_name=$1
   if [ -z "$of_name" ]; then
     rm $OF_DEFAULT_VERSION_PATH
-    echo "[ofvm] removed default OF"
+    __ofvm_log "removed default OF"
     return 0
   fi
 
@@ -174,7 +182,7 @@ ofvm_default() {
   fi
 
   echo $of_name > $OF_DEFAULT_VERSION_PATH
-  echo "[ofvm] using $of_name as default OF"
+  __ofvm_log "using $of_name as default OF"
   ofvm_use $of_name
 }
 
@@ -190,9 +198,9 @@ ofvm_listavailable() {
   fi
 
   echo
-  echo "Installation is done via ofvm install OpenFOAM-VERSION"
-  echo "Extra targets can be defined in:"
-  echo "  - $OF_EXTRA_VERSIONS"
+  __ofvm_log "Installation is done via ofvm install OpenFOAM-VERSION"
+  __ofvm_log "Extra targets can be defined in:"
+  __ofvm_log "  - $OF_EXTRA_VERSIONS"
 }
 
 ofvm_tar() {

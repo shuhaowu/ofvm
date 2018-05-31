@@ -67,6 +67,7 @@ ofvm_help() {
     echo "  remove          remove a version of OF"
     echo "  use             switch to a different version of OF for this shell"
     echo "  default         set a default version of OF"
+    echo "  tar             creates a tar from the current installation to stdout"
   fi
 }
 
@@ -192,6 +193,10 @@ ofvm_listavailable() {
   echo "Installation is done via ofvm install OpenFOAM-VERSION"
   echo "Extra targets can be defined in:"
   echo "  - $OF_EXTRA_VERSIONS"
+}
+
+ofvm_tar() {
+  tar czf - -C $(dirname $OFVM_BASE) $(basename $OFVM_BASE)
 }
 
 if [ -f $OF_DEFAULT_VERSION_PATH ]; then

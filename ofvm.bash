@@ -188,6 +188,7 @@ ofvm_default() {
 
 ofvm_list() {
   versions=$(ls -1 $OF_SRC | grep OpenFOAM-)
+  echo "Installed versions:"
   echo $versions
 
   if [ -f $OF_DEFAULT_VERSION_PATH ]; then
